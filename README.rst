@@ -29,7 +29,7 @@ Factoid Embedding
 Example to run the codes
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block::
+.. code-block:: python
    python main.py --path ../data_for_experiment/facebook_twitter/ \
                    --source_prefix fb --target_prefix tw --source_col 0 --target_col 1  \
                    --name_method tfidf --image_exist True --user_dim 1024+256 \
@@ -41,7 +41,7 @@ Example to run the codes
 Usage
 ^^^^^
 
-.. code-block::
+.. code-block:: python
    usage: main.py [-h] [--path PATH] [--skip_network SKIP_NETWORK]
                   [--source_prefix SOURCE_PREFIX] [--target_prefix TARGET_PREFIX]
                   [--source_col SOURCE_COL] [--target_col TARGET_COL]
