@@ -1,4 +1,33 @@
-class ObjectEmbedding:
+from abc import ABC, abstractmethod
+
+
+class Embedding:
+    '''
+    Abstract class for embedding
+    '''
+
+    @abstractmethod
+    def fit(self, objects):
+        '''
+        Abstract method for training/fitting the embedding vector
+
+        :param objects:
+        :return:
+        '''
+        pass
+
+    @abstractmethod
+    def transform(self, objects):
+        '''
+        Abstract method for computing the embedding vector
+
+        :param objects:
+        :return:
+        '''
+        pass
+
+
+class ObjectEmbedding(Embedding):
     '''
     Class for Object Embedding
     '''
@@ -16,7 +45,7 @@ class ObjectEmbedding:
         '''
         Learn the embedding vectors of objects X based on a specified similarity function
 
-        :param O:
+        :param objects:
         :return:
         '''
         # TO DO: Implement logic here
@@ -24,16 +53,16 @@ class ObjectEmbedding:
 
     def transform(self, objects):
         '''
-        Compute the embedding vector for object X
+        Transform objects into embedding vectors
 
-        :param O:
+        :param objects:
         :return:
         '''
         # TO DO: Implement logic here
         return object_embeddings
 
 
-class FactoidEmbedding:
+class FactoidEmbedding(Embedding):
     '''
     Class for Factoid Embedding
     '''
@@ -42,8 +71,9 @@ class FactoidEmbedding:
         '''
         Constructor for factoid embedding
         '''
+        super().__init__()
 
-    def fit(self, object_embeddings, factoids):
+    def fit(self, factoids, object_embeddings):
         '''
         Learn the factoid embedding vectors based object embeddings and generated factoids
 
@@ -54,9 +84,9 @@ class FactoidEmbedding:
         # TO DO: Implement logic here
         return self
 
-    def transform(selfself, factoids):
+    def transform(self, factoids):
         '''
-        Compute the factoid embedding vectors
+        Transform factoids into embedding vectors
 
         :param factoids:
         :return:

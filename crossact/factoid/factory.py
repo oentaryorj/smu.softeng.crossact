@@ -6,12 +6,6 @@ class FactoidFactory(ABC):
     Abstract class for generating factoids from data
     '''
 
-    def __init__(self):
-        '''
-        Constructor for FactoidFactory
-        '''
-        pass
-
     @abstractmethod
     def run(self, data):
         '''
