@@ -37,7 +37,7 @@ class GitHubFactoidFactory(FactoidFactory):
 class StackOverflowFactoidFactory(FactoidFactory):
     def __init__(self):
         '''
-        Constructor for Github factoid factory
+        Constructor for StackOverflow factoid factory
         '''
         pass
 

@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from utils import jaro_winkler_similarity
 
 
 class Embedding:
@@ -32,7 +33,7 @@ class ObjectEmbedding(Embedding):
     Class for Object Embedding
     '''
 
-    def __init__(self, similarity_func):
+    def __init__(self, similarity_func=jaro_winkler_similarity):
         '''
         Constructor for object embedding
 
