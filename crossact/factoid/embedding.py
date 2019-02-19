@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from utils import jaro_winkler_similarity
+from similarity import jaro_winkler_similarity
 
 
 class Embedding:
