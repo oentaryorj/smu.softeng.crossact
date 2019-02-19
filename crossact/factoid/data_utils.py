@@ -70,6 +70,15 @@ class DataLoader:
 
     @staticmethod
     def load_label(path_file):
+        """
+        Load label data from file
+
+        Args:
+            path_file (str): Data location path
+
+        Returns:
+            dict: Label dictionary
+        """
         t0 = time()
         label_dict = {}
 
@@ -81,9 +90,19 @@ class DataLoader:
         return label_dict
 
 
-class DataTransformer:
+class DataProcessor:
     @staticmethod
     def compute_user_tag(user_obj_dict, obj_tag_dict):
+        """
+        Compute user tags from user object and object tag dictionaries
+
+        Args:
+            user_obj_dict (dict): User object dictionary
+            obj_tag_dict (dict): Object tag dictionary
+
+        Returns:
+            dict: Computed user tag dictionary
+        """
         user_tag_dict = defaultdict(list)
 
         for uid, objs in user_obj_dict.items():
@@ -93,22 +112,20 @@ class DataTransformer:
         return user_tag_dict
 
     @staticmethod
-    def merge_user_tags(user_tag_dicts):
-        merged_dict = defaultdict(list)
-        all_user_ids, all_user_tags = [], []
-
-        for user_tag_dict in user_tag_dicts:
-            for user_id, user_tags in user_tag_dict:
-                merged_dict[user_id].extend(user_tags)
-
-        for user_id, user_tags in merged_dict.items():
-            all_user_ids.append(user_id)
-            all_user_tags.append(user_tags)
-
-        return all_user_ids, all_user_tags
-
-    @staticmethod
     def compute_user_features(user_tag_dicts, vectorizer=TfidfVectorizer()):
+        """
+        Computes user features by merging user tags from multiple platforms
+
+        Args:
+            user_tag_dicts (List): List of user tag dictionaries
+
+        Kwargs:
+            vectorizer: Feature vectorizer (Default: TfidfVectorizer)
+
+        Returns:
+            user_ids: List of user ids
+            user_features: sparse matrix representation of features with shape of (n_users, n_features)
+        """
         t0 = time()
         merged_dict = defaultdict(list)
         all_user_ids, all_user_tags = [], []
@@ -136,14 +153,13 @@ if __name__ == '__main__':
     so_loader = DataLoader('so')
     user_question = so_loader.load_user_object(user_question_path_file)
     question_tag = so_loader.load_object_tag(question_path_file)
-    so_user_tag = DataTransformer.compute_user_tag(user_question, question_tag)
+    so_user_tag = DataProcessor.compute_user_tag(user_question, question_tag)
 
     gh_loader = DataLoader('gh')
     user_repo = gh_loader.load_user_object(user_repository_path_file)
     repo_tag = gh_loader.load_object_tag(repository_path_file)
-    gh_user_tag = DataTransformer.compute_user_tag(user_repo, repo_tag)
+    gh_user_tag = DataProcessor.compute_user_tag(user_repo, repo_tag)
 
-    user_ids, user_features = DataTransformer.compute_user_features([so_user_tag, gh_user_tag])
+    user_ids, user_features = DataProcessor.compute_user_features([so_user_tag, gh_user_tag])
 
     logging.info('#users: {}, #feature dimension: {}'.format(len(user_ids), user_features.shape))
-    # print(len(question_tag), len(repo_tag), len(user_question))

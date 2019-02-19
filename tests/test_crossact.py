@@ -7,7 +7,6 @@
 import unittest
 from click.testing import CliRunner
 
-from crossact import crossact
 from crossact import cli
 
 
