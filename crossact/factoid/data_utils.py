@@ -5,8 +5,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from collections import defaultdict
 from time import time
 
-logging.basicConfig(level=logging.INFO)
-
 
 class DataLoader:
     """
@@ -147,6 +145,8 @@ class DataProcessor:
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+    
     root_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     data_path = os.path.join(root_path, 'data/SO_GH')
 
