@@ -42,7 +42,8 @@ class DataLoader:
                 obj_tags = [t.strip() for t in tokens[1].split(';')]
                 tag_dict[obj_id] = obj_tags
 
-        logging.info('Loading object tag data from {} takes {} secs'.format(path_file, time() - t0))
+        logging.info('Loading object tag data with {} rows from {} takes {} secs'.format(len(tag_dict),
+                                                                                         path_file, time() - t0))
         return tag_dict
 
     def load_user_object(self, path_file):
@@ -65,7 +66,8 @@ class DataLoader:
                 obj_id = '{}_{}'.format(self.data_type, tokens[1])
                 user_object_dict[user_id].append(obj_id)
 
-        logging.info('Loading user object data from {} takes {} secs'.format(path_file, time() - t0))
+        logging.info('Loading user object data with {} ros from {} takes {} secs'.format(len(user_object_dict),
+                                                                                         path_file, time() - t0))
         return user_object_dict
 
     @staticmethod
@@ -86,7 +88,8 @@ class DataLoader:
             # TODO: Implement the logic once the format is finalised
             pass
 
-        logging.info('Loading label data from {} takes {} secs'.format(path_file, time() - t0))
+        logging.info('Loading label data with {} rows from {} takes {} secs'.format(len(label_dict),
+                                                                                    path_file, time() - t0))
         return label_dict
 
 
@@ -132,23 +135,25 @@ class DataProcessor:
 
         for user_tag_dict in user_tag_dicts:
             for user_id, user_tags in user_tag_dict.items():
-                merged_dict[user_id] += user_tags
+                merged_dict[user_id].extend(user_tags)
 
         for user_id, user_tags in merged_dict.items():
             all_user_ids.append(user_id)
             all_user_tags.append(' '.join(user_tags))
 
         user_features = vectorizer.fit_transform(all_user_tags)
-        logging.info('Compute user features takes {} secs'.format(time() - t0))
+        logging.info('Computing user features with shape takes {} secs'.format(user_features.shape, time() - t0))
         return all_user_ids, user_features
 
 
 if __name__ == '__main__':
-    base_path = '../../data/SO_GH'
-    question_path_file = os.path.join(base_path, 'question_tag.csv')
-    user_question_path_file = os.path.join(base_path, 'user_question.csv')
-    repository_path_file = os.path.join(base_path, 'repository_tag.csv')
-    user_repository_path_file = os.path.join(base_path, 'user_repository.csv')
+    root_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    data_path = os.path.join(root_path, 'data/SO_GH')
+
+    question_path_file = os.path.join(data_path, 'question_tag.csv')
+    user_question_path_file = os.path.join(data_path, 'user_question.csv')
+    repository_path_file = os.path.join(data_path, 'repository_tag.csv')
+    user_repository_path_file = os.path.join(data_path, 'user_repository.csv')
 
     so_loader = DataLoader('so')
     user_question = so_loader.load_user_object(user_question_path_file)
@@ -162,4 +167,4 @@ if __name__ == '__main__':
 
     user_ids, user_features = DataProcessor.compute_user_features([so_user_tag, gh_user_tag])
 
-    logging.info('#users: {}, #feature dimension: {}'.format(len(user_ids), user_features.shape))
+    logging.info('No. of users: {}, Feature dimension: {}'.format(len(user_ids), user_features.shape))
