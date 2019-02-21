@@ -143,10 +143,40 @@ class DataProcessor:
         logging.info('Computing user features with shape takes {} secs'.format(user_features.shape, time() - t0))
         return all_user_ids, user_features
 
+    @staticmethod
+    def compute_user_features_each_platform(user_tag_dict, vectorizer=TfidfVectorizer()):
+        """
+                Computes user features from each platform
+
+                Args:
+                    user_tag_dicts (List): List of user tag dictionaries
+
+                Kwargs:
+                    vectorizer: Feature vectorizer (Default: TfidfVectorizer)
+
+                Returns:
+                    user_ids: List of user ids
+                    user_features: sparse matrix representation of features with shape of (n_users, n_features)
+                """
+        t0 = time()
+        merged_dict = defaultdict(list)
+        all_user_ids, all_user_tags = [], []
+
+        for user_id, user_tags in user_tag_dict:
+            merged_dict[user_id].extend(user_tags)
+
+        for user_id, user_tags in merged_dict.items():
+            all_user_ids.append(user_id)
+            all_user_tags.append(' '.join(user_tags))
+
+        user_features = vectorizer.fit_transform(all_user_tags)
+        logging.info('Computing user features with shape takes {} secs'.format(user_features.shape, time() - t0))
+        return all_user_ids, user_features
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
-    
+
     root_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     data_path = os.path.join(root_path, 'data/SO_GH')
 
