@@ -156,16 +156,17 @@ if __name__ == '__main__':
     root_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     data_path = os.path.join(root_path, 'data', 'SO_GH')
 
-    so_question_tag_file = os.path.join(data_path, 'question_tag.csv.gz')
     so_user_question_file = os.path.join(data_path, 'user_question.csv.gz')
-    gh_repo_tag_file = os.path.join(data_path, 'repository_tag.csv.gz')
-    gh_user_repo_file = os.path.join(data_path, 'user_repository.csv.gz')
+    so_question_tag_file = os.path.join(data_path, 'question_tag.csv.gz')
 
     so_loader = DataLoader(id_prefix='so')
     so_user_question_df = so_loader.load_user_object(so_user_question_file)
     so_question_tag_df = so_loader.load_object_tag(so_question_tag_file)
     so_user_tag_df = DataProcessor.aggregate_user_tags(so_user_question_df, so_question_tag_df)
     so_user_ids, so_user_tag_features = DataProcessor.compute_user_tag_features(so_user_tag_df)
+
+    gh_user_repo_file = os.path.join(data_path, 'user_repository.csv.gz')
+    gh_repo_tag_file = os.path.join(data_path, 'repository_tag.csv.gz')
 
     gh_loader = DataLoader(id_prefix='gh')
     gh_user_repo_df = gh_loader.load_user_object(gh_user_repo_file)
