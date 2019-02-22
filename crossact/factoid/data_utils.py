@@ -159,19 +159,15 @@ class DataProcessor:
                     user_features: sparse matrix representation of features with shape of (n_users, n_features)
                 """
         t0 = time()
-        merged_dict = defaultdict(list)
         all_user_ids, all_user_tags = [], []
 
-        for user_id, user_tags in user_tag_dict:
-            merged_dict[user_id].extend(user_tags)
-
-        for user_id, user_tags in merged_dict.items():
+        for user_id, user_tags in user_tag_dict.items():
             all_user_ids.append(user_id)
             all_user_tags.append(' '.join(user_tags))
 
         user_features = vectorizer.fit_transform(all_user_tags)
         logging.info('Computing user features with shape takes {} secs'.format(user_features.shape, time() - t0))
-        return all_user_ids, user_features
+        return (all_user_ids, user_features)
 
 
 if __name__ == '__main__':
@@ -189,11 +185,13 @@ if __name__ == '__main__':
     user_question = so_loader.load_user_object(user_question_path_file)
     question_tag = so_loader.load_object_tag(question_path_file)
     so_user_tag = DataProcessor.compute_user_tag(user_question, question_tag)
+    so_user_feature = DataProcessor.compute_user_features_each_platform(so_user_tag)
 
     gh_loader = DataLoader('gh')
     user_repo = gh_loader.load_user_object(user_repository_path_file)
     repo_tag = gh_loader.load_object_tag(repository_path_file)
     gh_user_tag = DataProcessor.compute_user_tag(user_repo, repo_tag)
+    gh_user_feature = DataProcessor.compute_user_features_each_platform(gh_user_tag)
 
     user_ids, user_features = DataProcessor.compute_user_features([so_user_tag, gh_user_tag])
 
