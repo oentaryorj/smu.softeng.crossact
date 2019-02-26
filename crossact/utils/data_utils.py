@@ -12,7 +12,7 @@ class DataLoader:
     Utility class for loading various types of data from CSV files
     """
 
-    def __init__(self, id_prefix='', header_file=None):
+    def __init__(self, id_prefix=''):
         """
         Construct a DataLoader instance
 
@@ -30,9 +30,12 @@ class DataLoader:
 
         Returns:
             pd.DataFrame: Object tag dataframe
+
+        Raises:
+            NotImplementedError, RuntimeError
         """
         if '.csv' not in path_file:
-            raise FileNotFoundError('Only CSV format is supported currently')
+            raise NotImplementedError('Only CSV format is supported currently')
 
         t0 = time()
         df = pd.read_csv(path_file, sep=',', header=None)
@@ -57,9 +60,12 @@ class DataLoader:
 
         Returns:
             pd.DataFrame: User object dataframe
+
+        Raises:
+            NotImplementedError, RuntimeError
         """
         if '.csv' not in path_file:
-            raise FileNotFoundError('Only CSV format is supported currently')
+            raise NotImplementedError('Only CSV format is supported currently')
 
         t0 = time()
         df = pd.read_csv(path_file, sep=',', header=None)
@@ -85,9 +91,12 @@ class DataLoader:
 
         Returns:
             pd.DataFrame: Label dataframe
+
+        Raises:
+            NotImplementedError
         """
         if '.csv' not in path_file:
-            raise FileNotFoundError('Only CSV format is supported currently')
+            raise NotImplementedError('Only CSV format is supported currently')
 
         t0 = time()
         df = pd.DataFrame()
