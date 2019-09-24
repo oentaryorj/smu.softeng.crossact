@@ -26,6 +26,7 @@ Python Boilerplate contains all the boilerplate you need to create a Python pack
 Datasets
 ========
 * `Full Dataset <https://drive.google.com/open?id=14GPvxHjoC3A1nmLNJNlTSSI_hiBU9jGw>`_
+* `Toy Dataset (100users) <https://drive.google.com/open?id=1NM4g0oJ8O5yxc980qR2j-UhJ4miSpaIG>`_
 
 
 Credits
