@@ -32,9 +32,8 @@ Datasets
 Code
 ========
 * KEEN MODEL
-** `Running the code to save the data <https://github.com/oentaryorj/crossact/blob/master/james_code/load_data_ver2.py>`_
-*** We need to create three files for each Github or StackOverflow dataset (i.e., interactions_non_activities.pickle, i_features_non_activities.pickle, and u_features_CO.pickle)
-* `Toy Dataset (100users) <https://drive.google.com/open?id=1NM4g0oJ8O5yxc980qR2j-UhJ4miSpaIG>`_
+	* `Running the code to save the data <https://github.com/oentaryorj/crossact/blob/master/james_code/load_data_ver2.py>`_
+		* We need to create three files for each Github or StackOverflow dataset (i.e., interactions_non_activities.pickle, i_features_non_activities.pickle, and u_features_CO.pickle)
 
 Credits
 -------
