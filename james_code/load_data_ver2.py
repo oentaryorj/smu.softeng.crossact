@@ -34,6 +34,8 @@ def load_interactions_without_activities(i_train, n_users, n_items):
             users.append(src)
             items.append(des)
             labels.append(1)
+            
+    # TODO: Check if normalisation is needed. In my opinion, binary features/matrices need not be normalised at all :)
     return normalize(A), (users, items, labels)
 
 
@@ -63,6 +65,8 @@ def load_interactions_with_activities_for_ACT(i_train, n_users, n_items, n_activ
                 users.append(src)
                 items.append(des)
                 labels.append(1)
+                
+    # TODO: Check if normalisation is needed. In my opinion, binary features/matrices need not be normalised at all :)
     return normalize(A), (users, items, labels)
 
 
@@ -77,6 +81,8 @@ def load_item_features_without_activities(i_file, i_neighbors, n_items, n_tags, 
             rid = int(row[0])
             tag = int(row[1])
             A[rid, tag] = 1
+            
+    # TODO: Check if normalisation is needed. In my opinion, binary features/matrices need not be normalised at all :)
     return normalize(A)
 
 
