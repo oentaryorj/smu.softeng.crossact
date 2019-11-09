@@ -77,11 +77,14 @@ def construct_data(items, thresholds):
 class NeuralNet(nn.Module):
     def __init__(self, input_dim, output_dim):
         super(NeuralNet, self).__init__()
-        self.fc1 = nn.Linear(input_dim, 100)
-        self.fc2 = nn.Linear(100, output_dim)
+        # self.fc1 = nn.Linear(input_dim, 100)
+        # self.fc2 = nn.Linear(100, output_dim)
+        
+        self.fc1 = nn.Linear(input_dim, output_dim)
 
     def forward(self, x):
-        output = self.fc2(self.fc1(x))
+        # output = self.fc2(self.fc1(x))
+        output = self.fc1(x)
         return output
 
 
